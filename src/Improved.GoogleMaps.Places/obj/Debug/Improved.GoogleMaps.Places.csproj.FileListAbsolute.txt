@@ -1,7 +1,0 @@
-C:\dev\google-maps-places\src\Improved.GoogleMaps.Places\Improved.GoogleMaps.Places\bin\Debug\Improved.GoogleMaps.Places.dll
-C:\dev\google-maps-places\src\Improved.GoogleMaps.Places\Improved.GoogleMaps.Places\bin\Debug\Improved.GoogleMaps.Places.pdb
-C:\dev\google-maps-places\src\Improved.GoogleMaps.Places\Improved.GoogleMaps.Places\bin\Debug\Newtonsoft.Json.dll
-C:\dev\google-maps-places\src\Improved.GoogleMaps.Places\Improved.GoogleMaps.Places\bin\Debug\Newtonsoft.Json.xml
-C:\dev\google-maps-places\src\Improved.GoogleMaps.Places\Improved.GoogleMaps.Places\obj\Debug\Improved.GoogleMaps.Places.csprojResolveAssemblyReference.cache
-C:\dev\google-maps-places\src\Improved.GoogleMaps.Places\Improved.GoogleMaps.Places\obj\Debug\Improved.GoogleMaps.Places.dll
-C:\dev\google-maps-places\src\Improved.GoogleMaps.Places\Improved.GoogleMaps.Places\obj\Debug\Improved.GoogleMaps.Places.pdb
