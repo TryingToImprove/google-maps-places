@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>0.1</version>
+    <title>Improved GoogleMaps Palces</title>
+    <authors>TryingToImprove</authors>
+    <licenseUrl>https://github.com/TryingToImprove/google-maps-places</licenseUrl>
+    <projectUrl>https://github.com/TryingToImprove/google-maps-places</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple client for fetching geocoding</description>
+    <releaseNotes>Initial commit</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>GoogleMaps Geocoding</tags>
+  </metadata>
+</package>
