@@ -36,6 +36,11 @@ namespace Improved.GoogleMaps.Places
             }
         }
 
+        public Task<object> GetDetailsByPlaceId(string placeId)
+        {
+            
+        }
+
         private Uri GenerateSearchUrl(string input)
         {
             var url = new StringBuilder();
