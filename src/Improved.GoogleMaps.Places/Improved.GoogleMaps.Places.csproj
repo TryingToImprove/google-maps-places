@@ -43,8 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DetailsResult.cs" />
+    <Compile Include="Models\PlaceResult.cs" />
     <Compile Include="PlacesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UrlFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

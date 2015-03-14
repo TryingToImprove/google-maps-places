@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -9,6 +7,8 @@ namespace Improved.GoogleMaps.Places
 {
     public class PlacesService
     {
+        private readonly UrlFactory _urlFactory;
+
         private readonly string _apiKey;
         private readonly string _language;
 
@@ -20,14 +20,14 @@ namespace Improved.GoogleMaps.Places
 
             _apiKey = apiKey;
             _language = language;
+            _urlFactory = new UrlFactory(_apiKey, _language);
         }
 
         public Task<PlaceResult> SearchAsync(string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-                throw new ArgumentNullException(input);
+            if (string.IsNullOrWhiteSpace(input)) throw new ArgumentNullException("input");
 
-            var url = GenerateSearchUrl(input);
+            var url = _urlFactory.GenerateSearchUrl(input);
 
             using (var webClient = new WebClient())
             {
@@ -36,63 +36,17 @@ namespace Improved.GoogleMaps.Places
             }
         }
 
-        public Task<object> GetDetailsByPlaceId(string placeId)
+        public Task<DetailsResult> GetDetailsByPlaceId(string placeId)
         {
-            
-        }
+            if (string.IsNullOrWhiteSpace(placeId)) throw new ArgumentNullException("placeId");
 
-        private Uri GenerateSearchUrl(string input)
-        {
-            var url = new StringBuilder();
-            url.AppendFormat("https://maps.googleapis.com/maps/api/place/autocomplete/json?key={0}", _apiKey);
-            url.AppendFormat("&input={0}", input);
+            var url = _urlFactory.GenerateDetailsUrl(placeId);
 
-            if (!string.IsNullOrWhiteSpace(_language))
+            using (var webClient = new WebClient())
             {
-                url.AppendFormat("&language={0}", _language);
+                return webClient.DownloadStringTaskAsync(url)
+                        .ContinueWith(x => JsonConvert.DeserializeObject<DetailsResult>(x.Result));
             }
-
-            return new Uri(url.ToString());
         }
-    }
-
-    public class PlaceResult
-    {
-        public IEnumerable<Prediction> Predictions { get; set; }
-
-        public string Status { get; set; }
-    }
-
-    public class Prediction
-    {
-        public string Description { get; set; }
-
-        public string Id { get; set; }
-
-        [JsonProperty("matched_substrings")]
-        public IEnumerable<MatchedSubstrings> MatchedSubstrings { get; set; }
-
-        [JsonProperty("place_id")]
-        public string PlaceId { get; set; }
-
-        public string Reference { get; set; }
-
-        public IEnumerable<Term> Terms { get; set; }
-
-        public IEnumerable<string> Types { get; set; }
-    }
-
-    public class MatchedSubstrings
-    {
-        public int Length { get; set; }
-
-        public int Offset { get; set; }
-    }
-
-    public class Term
-    {
-        public int Offset { get; set; }
-
-        public string Value { get; set; }
     }
 }
