@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>0.1</version>
+    <version>0.1.5</version>
     <title>Improved GoogleMaps Palces</title>
     <authors>TryingToImprove</authors>
     <licenseUrl>https://github.com/TryingToImprove/google-maps-places</licenseUrl>

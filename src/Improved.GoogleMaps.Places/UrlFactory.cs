@@ -14,7 +14,7 @@ namespace Improved.GoogleMaps.Places
             _language = language;
         }
 
-        public Uri GenerateSearchUrl(string input)
+        public Uri GenerateSearchUrl(string input, AutocompleteRequest request)
         {
             var url = new StringBuilder();
             url.AppendFormat("https://maps.googleapis.com/maps/api/place/autocomplete/json?key={0}", _apiKey);
@@ -25,6 +25,19 @@ namespace Improved.GoogleMaps.Places
                 url.AppendFormat("&language={0}", _language);
             }
 
+            if (request != null)
+            {
+                if (!string.IsNullOrWhiteSpace(request.Components))
+                {
+                    url.AppendFormat("&components={0}", request.Components);
+                }
+
+                if (!string.IsNullOrWhiteSpace(request.Types))
+                {
+                    url.AppendFormat("&types={0}", request.Types);
+                }
+            }
+
             return new Uri(url.ToString());
         }
 
@@ -32,7 +45,7 @@ namespace Improved.GoogleMaps.Places
         {
             var url = new StringBuilder();
             url.AppendFormat("https://maps.googleapis.com/maps/api/place/details/json?key={0}", _apiKey);
-            url.AppendFormat("&placeId={0}", placeId);
+            url.AppendFormat("&placeid={0}", placeId);
 
             if (!string.IsNullOrWhiteSpace(_language))
             {
