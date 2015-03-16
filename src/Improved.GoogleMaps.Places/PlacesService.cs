@@ -27,7 +27,7 @@ namespace Improved.GoogleMaps.Places
             _apiKey = apiKey;
             _language = language;
             _urlFactory = new UrlFactory(_apiKey, _language);
-            _cachingProvider = new RavenCachingProvider("data1");
+            _cachingProvider =null // new RavenCachingProvider("data1");
         }
 
         public Task<PlaceResult> SearchAsync(string input)
