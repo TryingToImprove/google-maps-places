@@ -9,17 +9,17 @@ namespace Improved.GoogleMaps.Places
 {
     internal class StaticCachingProvider : ICachingProvider
     {
-        private static readonly ConcurrentDictionary<string, IEnumerable<DetailsResult>> _cache = new ConcurrentDictionary<string, IEnumerable<DetailsResult>>();
+        private static readonly ConcurrentDictionary<string, IEnumerable<DetailsResult>> CacheStorage = new ConcurrentDictionary<string, IEnumerable<DetailsResult>>();
 
         public void StoreAutocompleteResult(string input, AutocompleteRequest request, IEnumerable<DetailsResult> results)
         {
-            _cache.TryAdd(input, results);
+            CacheStorage.TryAdd(input, results);
         }
 
         public IEnumerable<DetailsResult> GetAutocompleteResult(string input, AutocompleteRequest request)
         {
             IEnumerable<DetailsResult> results;
-            _cache.TryGetValue(input, out results);
+            CacheStorage.TryGetValue(input, out results);
 
             return results;
         }
