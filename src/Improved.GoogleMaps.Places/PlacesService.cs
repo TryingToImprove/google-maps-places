@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -27,7 +28,7 @@ namespace Improved.GoogleMaps.Places
             _apiKey = apiKey;
             _language = language;
             _urlFactory = new UrlFactory(_apiKey, _language);
-            _cachingProvider =null // new RavenCachingProvider("data1");
+            _cachingProvider = new StaticCachingProvider();
         }
 
         public Task<PlaceResult> SearchAsync(string input)
