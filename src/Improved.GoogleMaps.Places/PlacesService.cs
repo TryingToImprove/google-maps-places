@@ -5,6 +5,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Raven.Client;
+using Raven.Client.Embedded;
 
 namespace Improved.GoogleMaps.Places
 {
@@ -14,6 +16,7 @@ namespace Improved.GoogleMaps.Places
 
         private readonly string _apiKey;
         private readonly string _language;
+        private readonly ICachingProvider _cachingProvider;
 
         public PlacesService(string apiKey) : this(apiKey, null) { }
 
@@ -24,6 +27,7 @@ namespace Improved.GoogleMaps.Places
             _apiKey = apiKey;
             _language = language;
             _urlFactory = new UrlFactory(_apiKey, _language);
+            _cachingProvider = new RavenCachingProvider("data1");
         }
 
         public Task<PlaceResult> SearchAsync(string input)
@@ -33,6 +37,11 @@ namespace Improved.GoogleMaps.Places
 
         public async Task<IEnumerable<DetailsResult>> AutocompleteAsync(string input, AutocompleteRequest request)
         {
+            var results = _cachingProvider.GetAutocompleteResult(input, request);
+
+            if (results != null)
+                return results;
+
             var items = await SearchAsync(input, new AutocompleteRequest { Types = "address" })
                 .ContinueWith(async x => await Task.WhenAll(x.Result.Predictions.Select(prediction =>
                 {
@@ -42,7 +51,11 @@ namespace Improved.GoogleMaps.Places
                     return GetDetailsByPlaceId(prediction.PlaceId);
                 })));
 
-            return (await items).Where(x => x != null);
+            results = (await items).Where(x => x != null);
+
+            _cachingProvider.StoreAutocompleteResult(input, request, results);
+
+            return results;
         }
 
         public Task<PlaceResult> SearchAsync(string input, AutocompleteRequest request)
@@ -75,5 +88,4 @@ namespace Improved.GoogleMaps.Places
             }
         }
     }
-
 }
